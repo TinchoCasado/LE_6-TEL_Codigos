@@ -1,1 +1,62 @@
+#include <stdio.h>
+#include <stdio_ext.h>  
+char i;
+int num;
 
+void info(void);
+
+struct alumnos
+{
+  char nombre[20];
+  char apellido[20];
+  unsigned int edad;
+  unsigned int grado;
+  char curso[20];
+};
+
+int main(void)
+{
+  printf("Bienvenido a la base de datos de alumnos\n");
+  info();
+  
+  return 0;
+}
+
+void info(void)
+{
+    unsigned int cant;
+    unsigned char x;
+    printf("Ingrese la cantidad de alumnos: ");
+    scanf("%d", &cant);
+    struct alumnos alumno[cant];
+    for(x=0;x<cant;x++)
+    {
+        printf("Ingrese el nombre del alumno %d: " ,x+1);
+        __fpurge(stdin);
+        scanf("%s", alumno[x].nombre);
+        printf("Ingrese el apellido del alumno %d: " ,x+1);
+        __fpurge(stdin);
+        scanf("%s", alumno[x].apellido);
+        printf("Ingrese la edad del alumno %d: " ,x+1);
+        __fpurge(stdin);
+        scanf("%d", &alumno[x].edad);
+        printf("Ingrese el grado del alumno %d: " ,x+1);
+        __fpurge(stdin);
+        scanf("%d", &alumno[x].grado);
+        printf("Ingrese el curso del alumno %d: " ,x+1);
+        __fpurge(stdin);
+        scanf("%s", alumno[x].curso);
+    } 
+    printf("\n¿Quiere buscar un alumno en especifico? y/n: ");
+    scanf("%s", &i);
+    if (i=='y'){
+    printf("Ingrese el número del alumno que quiere buscar: ");
+    scanf("%d", &num);
+    num--;
+    printf("El nombre del alumno %d es %s\n", num+1, alumno[num].nombre);
+    printf("El apellido del alumno %d es %s\n", num+1, alumno[num].apellido);
+    printf("La edad del alumno %d es %d\n", num+1, alumno[num].edad);
+    printf("El grado del alumno %d es %d\n", num+1, alumno[num].grado);
+    printf("El curso del alumno %d es %s\n", num+1, alumno[num].curso);
+  }
+}
