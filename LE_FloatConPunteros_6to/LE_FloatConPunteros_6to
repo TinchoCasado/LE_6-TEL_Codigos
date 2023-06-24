@@ -1,1 +1,26 @@
+#include <stdio.h>
 
+float num;
+short int x=1, n=0;
+
+int main()
+{
+    while (1)
+    {
+        printf("Ingrese un número e imprimiremos su equivalente IEEE 754 en hexadecimal: ");  
+        scanf("%f", &num);
+        //int *pf=(int *)&num;
+        //printf("%.2X\n",*pf);
+        unsigned char *pf=(unsigned char *)&num;
+        for (n=3;n>=0;n--)
+        {
+            printf("%.2X\n", *pf);
+            pf++;
+            //printf("%d", n);
+        }
+        printf("¡Quiere seguir en el programa? [1 para seguir/0 para salir]: ");
+        scanf("%hd", &x);
+        if (x!=1) break;
+    }
+    return 0;
+}
