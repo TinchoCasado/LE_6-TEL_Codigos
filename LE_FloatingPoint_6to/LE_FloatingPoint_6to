@@ -1,1 +1,39 @@
+#include <stdio.h>
+#define bits_man 23
+#define bits_exp 8
+#define bits_sig 1
 
+void mascara(void);
+
+union coma{
+    struct{
+        unsigned int mantisa : bits_man;    //asigno 23 bits a la mantisa
+        unsigned int exponente : bits_exp;  //asigno 8 bits al exponente
+        unsigned int signo : bits_sig;      //asigno 1 bit al signo
+    };
+    float num;
+};
+
+int main(void) {
+    mascara();
+    return 0;
+}
+
+void mascara(void)
+{
+    union coma u;
+    printf("Bienvenido, ingrese su número: ");
+    scanf("%f", &u.num);
+    if (u.signo & 0x01) printf("1"); // Imprimo el exponente
+    else printf("0");
+    for(int n=(bits_exp-1);n>=0;n--) // Recorro e imprimo el exponente
+    {
+        if ((u.exponente>>n & 0x01)==1) printf("1");
+        else printf("0");
+    }
+    for(int n=(bits_man-1);n>=0;n--) // Recorro e imprimo la mantisa
+    {
+        if ((u.mantisa>>n & 0x01)==1) printf("1");
+        else printf("0");
+    }
+}
