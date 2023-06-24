@@ -1,1 +1,43 @@
+#include <stdio.h>
+#define CANT 30
+#define CERO 0
+#define UNO 1
+int i=CERO;
 
+void comp(char*, char*);
+
+int main()
+{
+        printf("Bienvenido al comparador de dos palabras\nEl programa indicará si son iguales o no");
+        char pal1[CANT], pal2[CANT];
+        char *p1 = &pal1[CERO];
+        char *p2 = &pal2[CERO];
+        printf("\nIngrese su primer palabra: ");
+        scanf("%s", pal1);
+        printf("Ingrese su segunda palabra: ");
+        scanf("%s", pal2);
+        comp(p1, p2);
+        if (i==1) printf("Las palabras son iguales");
+        else printf("Las palabras son diferentes");
+        return 0;
+}
+
+void comp(char *p1, char *p2)
+{
+    for(int n=CERO;n<=CANT;n++)
+    {
+        if ((*p1) == (*p2))
+        {
+            //printf("1");
+            p1++;
+            p2++;
+            i=UNO;
+        }
+        else
+        {
+            //printf("0");
+            i=CERO;
+            break;
+        }
+    }
+}
