@@ -1,1 +1,26 @@
+#include <stdio.h>
+#define CANT 4
+#define LIM -1
 
+void conversion(void);
+
+union conversion
+{
+  float fl;
+  unsigned char hex[CANT]; 
+}hexa;
+
+int main()
+{
+  printf("Bienvenido al conversor de float a IEEE 754\n");
+  conversion();
+  return 0;
+}
+
+void conversion(void)
+{
+  printf("Ingrese un numero con coma: ");
+  scanf("%f", &hexa.fl);                              //Ingreso el número con coma
+  printf("El número en hexadecimal es: 0x");
+  for(int x=3;x>LIM;x--)printf("%.2X", hexa.hex[x]);  //Imprimo salida HEXA
+}
