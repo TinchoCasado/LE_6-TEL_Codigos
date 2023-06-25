@@ -44,38 +44,38 @@ void debounceFSM_init() //Establece a "estado" en 0 (BUTTON_UP)
 void debounceFSM_update()
 {
   switch(estado) //Se evalua cada caso que "estado" puede tener
-{
-    case BUTTON_UP:
-      Serial.println("estado: BUTTON_UP");
-      if (digitalRead(PULSADOR)==0) estado = BUTTON_FALLING;
-      break;
+  {
+  case BUTTON_UP:
+    Serial.println("estado: BUTTON_UP");
+    if (digitalRead(PULSADOR)==0) estado = BUTTON_FALLING;
+    break;
     
-    case BUTTON_FALLING:
-      Serial.println("estado: BUTTON_FALLING");
-      delay(40);
-      if (digitalRead(PULSADOR)==0)
-      {
-        buttonPressed();
-        estado = BUTTON_DOWN;
-      }
-      else estado = BUTTON_UP;
-      break;
+  case BUTTON_FALLING:
+    Serial.println("estado: BUTTON_FALLING");
+    delay(40);
+    if (digitalRead(PULSADOR)==0)
+    {
+      buttonPressed();
+      estado = BUTTON_DOWN;
+    }
+    else estado = BUTTON_UP;
+    break;
     
-    case BUTTON_DOWN:
-      Serial.println("estado: BUTTON_DOWN");
-      if (digitalRead(PULSADOR)==1) estado = BUTTON_RISING;
-      break;
+  case BUTTON_DOWN:
+    Serial.println("estado: BUTTON_DOWN");
+    if (digitalRead(PULSADOR)==1) estado = BUTTON_RISING;
+    break;
     
-    case BUTTON_RISING:
-      Serial.println("estado: BUTTON_RISING");
-      delay(40);
-      if (digitalRead(PULSADOR)==1)
-      {
-        buttonReleased();
-        estado = BUTTON_UP;
-      }
-      else estado = BUTTON_DOWN;
-      }
+  case BUTTON_RISING:
+    Serial.println("estado: BUTTON_RISING");
+    delay(40);
+    if (digitalRead(PULSADOR)==1)
+    {
+      buttonReleased();
+      estado = BUTTON_UP;
+    }
+    else estado = BUTTON_DOWN;
+  }
 }
 
 void buttonPressed() //Invierto el estado del led 1
