@@ -1,35 +1,23 @@
 /*ÁNODO COMÚN - Activo en bajo*/
-const int DIGITOS[16][7] = {
-/*0*/ {0,0,0,0,0,0,1},
-/*1*/ {1,0,0,1,1,1,1},
-/*2*/ {0,0,1,0,0,1,0},
-/*3*/ {0,0,0,0,1,1,0},
-/*4*/ {1,0,0,1,1,0,0},
-/*5*/ {0,1,0,0,1,0,0},
-/*6*/ {0,1,0,0,0,0,0},
-/*7*/ {0,0,0,1,1,1,1},
-/*8*/ {0,0,0,0,0,0,0},
-/*9*/ {0,0,0,0,1,0,0},
-/*A*/ {0,0,0,1,0,0,0},
-/*B*/ {1,1,0,0,0,0,0},
-/*C*/ {0,1,1,0,0,0,1},
-/*D*/ {1,0,0,0,0,1,0},
-/*E*/ {0,1,1,0,0,0,0},
-/*F*/ {0,1,1,1,0,0,0}
+const char pepito[16]
+{
+  0b11000000, //0
+  0b11111001, //1
+  0b10100100, //2
+  0b10110000, //3
+  0b10011001, //4
+  0b10010010, //5
+  0b10000010, //6
+  0b11111000, //7
+  0b10000000, //8
+  0b10010000, //9
+  0b10001000, //A
+  0b10000011, //B
+  0b11000110, //C
+  0b10100001, //D
+  0b10000110, //E
+  0b10001110  //F
 };
-
-
-#define A 2        // pines para cada segmento
-#define B 3
-#define C 4
-#define D 5
-#define E 6
-#define F 7
-#define G 8
-#define N 7
-const int SEGMENTOS[N] = {A,B,C,D,E,F,G}; //
-int d=0, i=0;
-bool flag;
 
 #define PULSADOR 10    // Defino pines a sus respectivos nombres constantes
 #define LED1_OUT 12
@@ -38,8 +26,9 @@ bool flag;
 #define LED2_READ 11
 #define DEMORA 40
 
+int d=0;
+bool flag;
 unsigned long t_now;
-
 typedef enum
 {
   BUTTON_UP,
@@ -52,28 +41,21 @@ void debounceFSM_init();   //ejecutada una sola vez
 void debounceFSM_update(); //se ejecuta siempre
 void buttonPressed();      //se ejecuta cuando estado==button_up
 void buttonReleased();     //se ejecuta cuando estado==button_down
-void initDisplay();        //se ejecuta al inicio para apagar el display
 int print(int);          //se ejecuta al presionar el botón para imprimir en el display
 debounceState_t estado;
 
 void setup ()
 {
+  DDRD = 0b11111111;
+  PORTD = 0b11111111;
   pinMode(PULSADOR,INPUT);  // Se inicializa cada pin a usar
   pinMode(LED1_OUT,OUTPUT);
   pinMode(LED2_OUT,OUTPUT);
   pinMode(LED1_READ,INPUT);
   pinMode(LED2_READ,INPUT);
-  Serial.begin(9600);       // Se inicializa el puerto serie
+  //Serial.begin(9600);       // Se inicializa el puerto serie
   debounceFSM_init();       // Se ejecuta una sola vez la función "init"
   t_now = millis();
-  pinMode(A, OUTPUT);
-  pinMode(B, OUTPUT);
-  pinMode(C, OUTPUT);
-  pinMode(D, OUTPUT);
-  pinMode(E, OUTPUT);
-  pinMode(F, OUTPUT);
-  pinMode(G, OUTPUT);
-  initDisplay();
 }
 
 void loop()
@@ -149,20 +131,8 @@ void buttonReleased() //Invierto el estado del led 2
   else digitalWrite(LED2_OUT, LOW);
 }
 
-int print(int d)
-{ 
-  for (int x=0; x<N; x++){
-    digitalWrite(SEGMENTOS[x], DIGITOS[d][x]);
-  }
+int print(int d){    //Función para imprimir los dígitos
+  PORTD = pepito[d];
   if (d<15) d++;
   else d=0;
-  return d;
-}
-
-void initDisplay(void) //Función para iniciar con el display apagado
-{
-  for (int y=2; y<9; y++)
-  {
-    digitalWrite(y, HIGH);
-  }
 }
